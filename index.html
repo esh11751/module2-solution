@@ -1,37 +1,54 @@
-<!DOCTYPE html>
-<html ng-app="DIApp">
+<!doctype html>
+<html lang="en" ng-app="ShoppingListCheckOff">
   <head>
-    <meta charset="utf-8">
     <script src="angular.min.js"></script>
     <script src="app.js"></script>
-    <title>Hello eshang test project</title>
+    <title>Shopping List Check Off</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <style>
+      .emptyMessage {
+        font-weight: bold;
+        color: red;
+        font-size: 1.2em;
+      }
+      li {
+        margin-bottom: 7px;
+        font-size: 1.2em;
+      }
+      li > button {
+        margin-left: 6px;
+      }
+      button > span {
+        color: green;
+      }
+    </style>
   </head>
-  <body>
-    <h1>Hello eshang--how are you--i am doing fine</h1>
+<body>
+  <div class="container">
+  <h1>Shopping List Check Off</h1>
 
-  <h1> My first angular appa </h1>
-  <div ng-controller="DIController">
-  <input type="text" ng-model="name">
-    {{name|uppercase}} value is {{ namevalue| currency : $$ : 3}}
-    custome fileter  says {{ sayhello()}} <br/>
-    check fileter says {{ sayhello() | check : "tea" :"milk"}}
-    <button ng-click="showNumberofWatchers()"> showCounters </button>
-    <button ng-click="setFullName()"> set Full Name </button>
+  <div class="row">
 
-    Full Name is  {{ :: FullName }}
-    <button ng-click="logname()"> log name </button>
-    <button ng-click="logFullName()"> log Full Name </button>
-    <!-- <h1> shopping list 1</h1>
-    <li ng-repeat="item in shoppingList1"> {{item}} </li> -->
+    <!-- To Buy List -->
+    <div class="col-md-6" ng-controller="BuyListController as showbuylist">
+     <h2>To Buy:</h2>
+     <ul ng-repeat="item in showbuylist.buyList">
+       <li>Buy {{item.quantity}} {{item.name}} <button class="btn btn-default" ng-click="showbuylist.additem($index)"><span class="glyphicon glyphicon-ok"></span> Bought</button></li>
+     </ul>
+     <div class="emptyMessage" ng-show="showbuylist.buyList.length==0">{{showbuylist.errormessage}}</div>
+    </div>
 
-    <h1> shopping list 2</h1>
-    <input type="text" ng-model="search">
-    <li ng-repeat="item in shoppingList2 |filter :search"> {{$index +1}}. {{item.name}} of quantity is {{item.quantity}} </li>
-
-    <input type="text" ng-model="newname">
-    <input type="text" ng-model="newquantity">
-    <button ng-click="addlist2()"> add item to shoppiglist2 </button>
-
+    <!-- Already Bought List -->
+    <div class="col-md-6" ng-controller="BoughtListController as showboughtlist">
+     <h2>Already Bought:</h2>
+     <ul ng-repeat="item in showboughtlist.boughtList">
+       <li>Bought  {{item.quantity}} {{item.name}} </li>
+     </ul>
+     <div class="emptyMessage" ng-if="showboughtlist.boughtList.length==0">{{showboughtlist.emptymessage}}</div>
+    </div>
   </div>
-  </body>
+</div>
+
+</body>
 </html>
